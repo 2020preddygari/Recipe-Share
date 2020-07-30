@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for recipe in recipes.all %}
+    <div class="row">
+        <div class="col-2" onclick="window.location='{% url 'detail' recipe.id %}';" style="cursor: pointer;">
+            <img src="{{ recipe.icon.url }}" class="img-fluid" />
+        </div>
+        <div class="col-6" onclick="window.location='{% url 'detail' recipe.id %}';" style="cursor: pointer;">
+            <h1>{{ recipe.title }}</h1>
+            <p>{{ recipe.summary }}</p>
+        </div>
+        <div class="col-4">
+            <a href="javascript:{document.getElementById('upvote{{ recipe.id }}').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Upvote {{ recipe.votes_total }}</button></a>
+        </div>
+    </div>
+    <form id="upvote{{ recipe.id }}" method="POST" action="{% url "upvote" recipe.id %}">
+        {%  csrf_token %}
+        <input type="hidden">
+    </form>
+{% endfor %}
+
+{% endblock %}

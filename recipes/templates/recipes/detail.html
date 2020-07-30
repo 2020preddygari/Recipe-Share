@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-2">
+        </div>
+        <div class="col-10">
+            <a href="{{ recipe.url }}"><h1>{{ recipe.title }}</h1></a>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-8">
+            <img src="{{ recipe.image.url }}" class="img-fluid" />
+        </div>
+        <div class="col-4">
+            <a href="javascript:{document.getElementById('upvote').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Upvote {{ recipe.votes_total }}</button></a>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-4">
+            <h4>Published by {{ recipe.publisher.username }}</h4>
+        </div>
+        <div class="col-4 text-right">
+            <h6>{{ recipe.pub_date }}</h6>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-8">
+            <p>{{ recipe.body }}</p>
+        </div>
+    </div>
+
+    <form id="upvote" method="POST" action="{% url "upvote" recipe.id %}">
+        {%  csrf_token %}
+        <input type="hidden">
+    </form>
+{% endblock %}
